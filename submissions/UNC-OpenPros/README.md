@@ -26,7 +26,7 @@ size_categories:
 
 ## Dataset Contributor(s)
 
-OpenPros was created by Hanchen Wang, Yixuan Wu, Yinan Feng, Peng Jin, Luoyuan Zhang, Shihang Feng, James Wiskin, Baris Turkbey, Peter A. Pinto, Bradford J. Wood, Songting Luo, Yinpeng Chen, Emad Boctor, and Youzuo Lin. The affiliations include the University of North Carolina at Chapel Hill, Johns Hopkins University, the National Institutes of Health, the Pennsylvania State University, QT Imaging, Iowa State University, and Google DeepMind. 
+OpenPros was created by Hanchen Wang, Yixuan Wu, Yinan Feng, Peng Jin, Luoyuan Zhang, Shihang Feng, James Wiskin, Baris Turkbey, Peter A. Pinto, Bradford J. Wood, Songting Luo, Yinpeng Chen, Emad Boctor, and Youzuo Lin. The affiliations include the University of North Carolina at Chapel Hill, Johns Hopkins University, the National Institutes of Health, the Pennsylvania State University, QT Imaging, Iowa State University, and Google DeepMind.
 - **Corresponding author:** Youzuo Lin (`yzlin@unc.edu`)
 - **Source repository:** <https://github.com/hanchenwang/OpenPros>
 - **Dataset website:** <https://open-pros.github.io/>
@@ -72,7 +72,7 @@ The file also stores source positions, probe geometry, scan parameters, subject 
 
 ## Dataset Quantification
 
-The full OpenPros release contains 280,000 paired samples (approximately 6.8 TB) with an official split of 224,000 training, 28,000 validation, and 28,000 test samples. It is derived from four patient-level clinical anatomies and 62 ex vivo prostate specimens. Each source NumPy file used here contains 1,140 examples. 
+The full OpenPros release contains 280,000 paired samples (approximately 6.8 TB) with an official split of 224,000 training, 28,000 validation, and 28,000 test samples. It is derived from four patient-level clinical anatomies and 62 ex vivo prostate specimens. Each source NumPy file used here contains 1,140 examples.
 
 By default, `flag_single_sample = True` in `convert.py`, so the packaged `openpros_sample.hdf5` contains only the first example and is approximately 20.5 MiB. Set the flag to `False` to convert all 1,140 examples in the selected source pair.
 
@@ -86,7 +86,7 @@ The leading dimension becomes `1140` when the complete selected source pair is c
 
 ## Subject Metadata
 
-The converted file identifies its content as a simulation and stores the composite subject ID (e.g., `1_2021-03-16`). This corresponds to OpenPros patient-level anatomy `3_01` and prostate-level anatomy `2021-03-16`. The full dataset contains four patient-level anatomy IDs (`3_01` through `3_04`) and 62 date-based prostate IDs. No direct identifiers or individual-level demographic attributes are included. 
+The converted file identifies its content as a simulation and stores the composite subject ID (e.g., `1_2021-03-16`). This corresponds to OpenPros patient-level anatomy `3_01` and prostate-level anatomy `2021-03-16`. The full dataset contains four patient-level anatomy IDs (`3_01` through `3_04`) and 62 date-based prostate IDs. No direct identifiers or individual-level demographic attributes are included.
 
 ## Data Validation
 
@@ -97,6 +97,8 @@ The converted file identifies its content as a simulation and stores the composi
 3. Min-max normalize the configured transformed input range to `[-1, 1]`.
 4. Run the pretrained InversionNet model.
 5. Denormalize its output from `[-1, 1]` to the physical SOS range `1300–3600 m/s`.
+
+The network is `zea.models.inversionnet.InversionNet`, a Keras 3 port of the official OpenPros baseline that runs on the JAX, TensorFlow and PyTorch backends. Its weights are the pretrained OpenPros checkpoint and are downloaded automatically from [`zeahub/openpros-inversion-net`](https://huggingface.co/zeahub/openpros-inversion-net) on first use.
 
 Run the end-to-end example with:
 
